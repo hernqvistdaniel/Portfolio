@@ -1,9 +1,18 @@
 import React from "react";
+import Typed from 'react-typed';
+
 import BaseLayout from "../components/layouts/BaseLayout";
 
 import { Button, Container, Row, Col } from "reactstrap";
 
 class Index extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.roles = ['Developer', 'Tech Lover', 'Nerd', 'Team-Player'];
+  }
+  
   render() {
     return (
       <BaseLayout className="cover">
@@ -26,7 +35,7 @@ class Index extends React.Component {
                       </div>
                       <img
                         className="image"
-                        src="/static/images/section-1.png"
+                        src="/static/images/spavatarsmal.png"
                       />
                       <div className="shadow-custom">
                         <div className="shadow-inner"> </div>
@@ -41,6 +50,19 @@ class Index extends React.Component {
                     Welcome to <strong>Daniel Hernqvist's</strong> portfolio page!
                   </h1>
                 </div>
+
+                <Typed
+                  loop
+                  typeSpeed={50}
+                  backSpeed={30}
+                  strings={this.roles}
+                  backDelay={1000}
+                  loopCount={0}
+                  showCursor
+                  className="self-typed"
+                  cursorChar="|"
+                />
+
                 <div className="hero-welcome-bio">
                   <h2>Here is some more information!</h2>
                 </div>
