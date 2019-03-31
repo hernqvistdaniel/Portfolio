@@ -1,65 +1,55 @@
-import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
-import axios from 'axios';
+import React from "react";
+import BaseLayout from "../components/layouts/BaseLayout";
 
+import { Button, Container, Row, Col } from "reactstrap";
 
 class Index extends React.Component {
-
-  static async getInitialProps() {
-    let userData = {};
-    try {
-      const response = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-      userData = response.data;
-    } catch(err) {
-      console.error(err);
-    }
-
-    return {
-      initialData:
-        [1, 2, 3, 4],
-        userData
-    };
-  }
-
-  constructor() {
-    super();
-
-    this.state = {
-      title: 'i am index page'
-    }
-    console.log('constructor');
-  }
-
-  componentDidMount() {
-    console.log('CDM')
-  }
-
-  componentDidUpdate() {
-    console.log('CDU')
-  }
-
-  componentWillUnmount() {
-    console.log('CWU');
-  }
-
-  updateTitle() {
-    this.setState({
-      title: 'i am updated'
-    });
-  }
-
   render() {
-    const {userData} = this.props;
-    console.log('render');
-
     return (
-      <BaseLayout>
-        <h1>index!</h1>
-        <h2>{userData.title}</h2>
-        <h2>{this.state.title}</h2>
-        <button onClick={() => this.updateTitle()}>Change title</button>
+      <BaseLayout className="cover">
+        <div className="main-section">
+          <div className="background-image">
+            <img src="/static/images/background-index.png" />
+          </div>
+
+          <Container>
+            <Row>
+              <Col md="6">
+                <div className="hero-section">
+                  <div className={`flipper`}>
+                    <div className="back">
+                      <div className="hero-section-content">
+                        <h2> Full Stack Web Development Student </h2>
+                        <div className="hero-section-content-intro">
+                          This is my Portfolio Page!
+                        </div>
+                      </div>
+                      <img
+                        className="image"
+                        src="/static/images/section-1.png"
+                      />
+                      <div className="shadow-custom">
+                        <div className="shadow-inner"> </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md="6" className="hero-welcome-wrapper">
+                <div className="hero-welcome-text">
+                  <h1>
+                    Welcome to <strong>Daniel Hernqvist's</strong> portfolio page!
+                  </h1>
+                </div>
+                <div className="hero-welcome-bio">
+                  <h2>Here is some more information!</h2>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </BaseLayout>
-    )
+    );
   }
 }
 
