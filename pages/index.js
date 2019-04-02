@@ -23,27 +23,7 @@ class Index extends React.Component {
 
           <Container>
             <Row>
-              <Col md="6">
-                <div className="hero-section">
-                  <div className={`flipper`}>
-                    <div className="back">
-                      <div className="hero-section-content">
-                        <h2> Full Stack Web Development Student </h2>
-                        <div className="hero-section-content-intro">
-                          This is my Portfolio Page!
-                        </div>
-                      </div>
-                      <img
-                        className="image"
-                        src="/static/images/spavatarsmal.png"
-                      />
-                      <div className="shadow-custom">
-                        <div className="shadow-inner"> </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Col>
+
               <Col md="6" className="hero-welcome-wrapper">
                 <div className="hero-welcome-text">
                   <h1>
@@ -65,6 +45,28 @@ class Index extends React.Component {
 
                 <div className="hero-welcome-bio">
                   <h2>Here is some more information!</h2>
+                </div>
+              </Col>
+
+              <Col md="6">
+                <div className="hero-section">
+                  <div className={`flipper`}>
+                    <div className="back">
+                      <div className="hero-section-content">
+                        <h2> Full Stack Web Development Student </h2>
+                        <div className="hero-section-content-intro">
+                          This is my Portfolio Page!
+                        </div>
+                      </div>
+                      <img
+                        className="image"
+                        src="/static/images/spavatarsmal.png"
+                      />
+                      <div className="shadow-custom">
+                        <div className="shadow-inner"> </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Col>
             </Row>
