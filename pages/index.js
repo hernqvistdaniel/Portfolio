@@ -53,14 +53,14 @@ class Index extends React.Component {
                   <div className={`flipper`}>
                     <div className="back">
                       <div className="hero-section-content">
-                        <h2> Full Stack Web Development Student </h2>
+                        <h2 className="hejsan"> Full Stack Web Development Student </h2>
                         <div className="hero-section-content-intro">
                           This is my Portfolio Page!
                         </div>
                       </div>
                       <img
                         className="image"
-                        src="/static/images/spavatarsmal.png"
+                        src="/static/images/spavatarsmal-no2.png"
                       />
                       <div className="shadow-custom">
                         <div className="shadow-inner"> </div>
