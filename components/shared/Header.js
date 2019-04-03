@@ -49,7 +49,7 @@ export default class Header extends React.Component {
   }
   render() {
 
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, user } = this.props;
 
     return (
       <div>
@@ -75,12 +75,12 @@ export default class Header extends React.Component {
               </NavItem>
               { !isAuthenticated &&
                 <NavItem className="port-navbar-item clickable">
-                <Login />
+                  <Login />
                 </NavItem>
               }
               { isAuthenticated &&
                 <NavItem className="port-navbar-item clickable">
-                <Logout />
+                  <Logout />
                 </NavItem>
               }
             </Nav>

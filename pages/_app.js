@@ -11,15 +11,13 @@ class MyApp extends App {
 
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
-    const isAuthenticated = process.browser ? auth0.clientAuth() : auth0.serverAuth(ctx.req);
+    const user = process.browser ? await auth0.clientAuth() : await auth0.serverAuth(ctx.req);
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    const auth = {
-      isAuthenticated
-    };
+    const auth = { user, isAuthenticated: !!user };
 
     return { pageProps, auth }
   }
