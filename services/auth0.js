@@ -13,7 +13,9 @@ class Auth0 {
     });
 
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
+    this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
   handleAuthentication() {
@@ -32,10 +34,8 @@ class Auth0 {
   }
 
   setSession(authResult) {
-    // Set isLoggedIn flag in localStorage
-    // Set the time that the access token will expire at
+ 
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    // this.accessToken = authResult.accessToken;
 
     Cookies.set('user', authResult.idTokenPayload);
     Cookies.set('jwt', authResult.idToken);
@@ -50,6 +50,32 @@ class Auth0 {
     Cookies.remove('user', authResult.idTokenPayload);
     Cookies.remove('jwt', authResult.idToken);
     Cookies.remove('expiresAt', expiresAt);
+
+    this.auth0.logout({
+      returnTo: '',
+      clientID: 'JfkjCC64plB6NYxfZ8CtB8ppjjNd5q9D'
+    })
+  }
+
+  isAuthenticated() {
+    const expiresAt = Cookies.getJSON('expiresAt');
+    return new Date().getTime() < expiresAt;
+  }
+
+  clientAuth() {
+    return this.isAuthenticated();
+  }
+
+  serverAuth(req) {
+if (req.headers.cookie) {
+  const expiresAtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('expiresAt='));
+
+  if (!expiresAtCookie) {
+    return undefined
+  };
+  const expiresAt = expiresAtCookie.split('=')[1];
+  return new Date().getTime() < expiresAt;
+}
   }
 }
 

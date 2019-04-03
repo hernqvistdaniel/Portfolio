@@ -8,7 +8,7 @@ import BasePage from '../components/BasePage';
 class Portfolio extends React.Component {
   render() {
     return (
-      <BaseLayout>
+      <BaseLayout {...this.props.auth}>
         <BasePage>
           <h1>im portfolio!</h1>
           <h2>{this.props.router.query.id}</h2>
