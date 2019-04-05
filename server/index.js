@@ -22,7 +22,7 @@ app.prepare()
   .then(() => {
     const server = express()
 
-    server.get('/api/v1/secret', authService.checkJWT, (req, res) => {
+    server.get('/api/v1/secret', (req, res) => {
       return res.json(secretData);
     })
 
