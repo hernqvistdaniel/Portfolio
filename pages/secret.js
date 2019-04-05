@@ -4,38 +4,36 @@ import BasePage from '../components/BasePage';
 
 import withAuth from '../components/hoc/withAuth';
 
+import axios from 'axios';
+
 
 class Secret extends React.Component {
 
-  // renderSecretPage() {
-  //   const { isAuthenticated } = this.props.auth;
+  static getInitialProps() {
+    const superSecretValue = 'Super Secret Value';
 
-  //   if (isAuthenticated) {
-  //     return (
-  //     <BaseLayout {...this.props.auth}>
-  //       <BasePage>
-  //         <h1>Secret!!</h1>
-  //         <p> Secret Content!</p>
-  //       </BasePage>
-  //     </BaseLayout>
-  //     )
-  //   } else {
-  //     return (
-  //       <BaseLayout {...this.props.auth}>
-  //         <BasePage>
-  //           <h1>You need to Log in!</h1>
-  //         </BasePage>
-  //       </BaseLayout>
-  //     )
-  //   }
-  // }
+    return { superSecretValue };
+  }
+
+  async componentDidMount() {
+    const res = await axios.get('/api/v1/secret');
+    const secretData = res.data;
+    this.setState =({
+      secretData
+    });
+  }
 
   render() {
+
+    const { superSecretValue } = this.props;
+
+    console.log(this.state);
     return (
       <BaseLayout {...this.props.auth}>
         <BasePage>
           <h1>Secret!!</h1>
           <p> Secret Content!</p>
+          <h2>{ superSecretValue }</h2>
         </BasePage>
       </BaseLayout>
       )

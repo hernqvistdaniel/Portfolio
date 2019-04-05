@@ -1,15 +1,36 @@
-import React from 'react';
+import React from "react";
+import BaseLayout from '../layouts/BaseLayout';
+import BasePage from '../BasePage';
 
-
-export default function (Component) {
+export default function(Component) {
   return class withAuth extends React.Component {
 
-      alertMessage() {
-        alert('message!');
-      }
+    static async getInitialProps(args) {
+      const pageProps = await Component.getInitialProps && await Component.getInitialProps(args);
 
-      render() {
-        return <Component {...this.props} />
+      return { ...pageProps };
+    }
+
+    renderProtectedPage() {
+      const { isAuthenticated } = this.props.auth;
+
+      if (isAuthenticated) {
+        return (
+          <Component {...this.props }/>
+        );
+      } else {
+        return (
+          <BaseLayout {...this.props.auth}>
+            <BasePage>
+              <h1>Not authenticated. You need to login to display this page!</h1>
+            </BasePage>
+          </BaseLayout>
+        );
       }
-  }
+    }
+
+    render() {
+      return this.renderProtectedPage()
+    }
+  };
 }
