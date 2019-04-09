@@ -1,6 +1,8 @@
 // Render Prop
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Button, FormGroup, Label } from "reactstrap";
+import PortInput from "../form/Portinput";
 
 const validateInputs = validate => {
   let errors = {};
@@ -37,47 +39,53 @@ const PortfolioCreateForm = () => (
     >
       {({ isSubmitting }) => (
         <Form>
-          <div>
-            <label>Title</label>
-            <Field type="text" name="title" />
-            <ErrorMessage name="title" component="div" />
-          </div>
+          <Field type="text" name="title" label="Title" component={PortInput} />
+          <Field
+            type="text"
+            name="company"
+            label="Company"
+            component={PortInput}
+          />
+          <Field
+            type="text"
+            name="location"
+            label="Location"
+            component={PortInput}
+          />
+          <Field
+            type="text"
+            name="position"
+            label="Position"
+            component={PortInput}
+          />
+          <Field
+            type="textarea"
+            name="description"
+            label="Description"
+            component={PortInput}
+          />
 
-          <div>
-            <label>Company</label>
-            <Field type="text" name="company" />
-            <ErrorMessage name="company" component="div" />
-          </div>
-
-          <div>
-            <label>Location</label>
-            <Field type="text" name="location" />
-            <ErrorMessage name="location" component="div" />
-          </div>
-
-          <div>
-            <label>Position</label>
-            <Field type="text" name="position" />
-            <ErrorMessage name="position" component="div" />
-          </div>
-
-          <div>
-            <label>Description</label>
-            <Field type="textarea" name="description" component="textarea" />
-            <ErrorMessage name="description" component="div" />
-          </div>
-
-          <div>
-            <label>Start Date</label>
-            <Field type="text" name="startDate" />
+          <FormGroup>
+            <Label>Start Date</Label>
+            <Field
+              className="form-control"
+              type="text"
+              name="startDate"
+              component={PortInput}
+            />
             <ErrorMessage name="startDate" component="div" />
-          </div>
+          </FormGroup>
 
-          <div>
-            <label>End Date</label>
-            <Field type="text" name="endDate" />
+          <FormGroup>
+            <Label>End Date</Label>
+            <Field
+              className="form-control"
+              type="text"
+              name="endDate"
+              component={PortInput}
+            />
             <ErrorMessage name="endDate" component="div" />
-          </div>
+          </FormGroup>
 
           <button type="submit" disabled={isSubmitting}>
             Submit
