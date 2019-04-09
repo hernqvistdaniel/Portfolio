@@ -1,17 +1,26 @@
 // Render Prop
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Button, FormGroup, Label } from "reactstrap";
-import PortInput from "../form/Portinput";
+import { Button } from "reactstrap";
+import PortInput from "../form/PortInput";
+import PortDate from "../form/PortDate";
 
-const validateInputs = validate => {
+const validateInputs = values => {
   let errors = {};
 
-  // if (!values.email) {
-  //   errors.email = "Required";
-  // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-  //   errors.email = "Invalid email address";
-  // }
+  Object.entries(values).forEach(([key, value]) => {
+    if (!values[key] && values[key] === 'startDate' || values[key] === 'endDate') {
+      errors[key] = `Field ${key} is required!`;
+    }
+  });
+
+  const startDate = values.startDate;
+  const endDate = values.endDate;
+
+  if (startDate && endDate && endDate.isBefore(startDate)) {
+    errors.endDate = 'End Date cannot be set to a time before Start Date.';
+  }
+
   return errors;
 };
 
@@ -25,17 +34,12 @@ const INITIAL_VALUES = {
   endDate: ""
 };
 
-const PortfolioCreateForm = () => (
+const PortfolioCreateForm = (props) => (
   <div>
     <Formik
       initialValues={INITIAL_VALUES}
       validate={validateInputs}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
+      onSubmit={props.onSubmit}
     >
       {({ isSubmitting }) => (
         <Form>
@@ -65,31 +69,22 @@ const PortfolioCreateForm = () => (
             component={PortInput}
           />
 
-          <FormGroup>
-            <Label>Start Date</Label>
-            <Field
-              className="form-control"
-              type="text"
-              name="startDate"
-              component={PortInput}
-            />
-            <ErrorMessage name="startDate" component="div" />
-          </FormGroup>
+          <Field
+            name="startDate"
+            label="Start Date"
+            component={PortDate}
+          />
 
-          <FormGroup>
-            <Label>End Date</Label>
-            <Field
-              className="form-control"
-              type="text"
-              name="endDate"
-              component={PortInput}
-            />
-            <ErrorMessage name="endDate" component="div" />
-          </FormGroup>
+          <Field
+            name="endDate"
+            label="End Date"
+            canBeDisabled={true}
+            component={PortDate}
+          />
 
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <Button color="success" size="lg" type="submit" disabled={isSubmitting}>
+            Create
+          </Button>
         </Form>
       )}
     </Formik>
