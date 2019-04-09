@@ -1,3 +1,4 @@
 /node_modules
 /.next
 /static/resources
+/server/config/dev.js

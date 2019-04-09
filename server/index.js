@@ -1,57 +1,81 @@
-const express = require('express');
-const next = require('next');
-const routes = require('../routes')
+const express = require("express");
+const next = require("next");
+const mongoose = require("mongoose");
+const routes = require("../routes");
 
 // SERVICE
-const authService = require('./services/auth');
+const authService = require("./services/auth");
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = routes.getRequestHandler(app);
+const config = require("./config");
 
+const Book = require('./models/book');
+const bodyParser = require('body-parser');
+
+const bookRoutes = require('./routes/book');
 
 const secretData = [
   {
-    title: 'SecretData 1',
-    description: 'Plans how to build spaceship'
-  }, 
+    title: "SecretData 1",
+    description: "Plans how to build spaceship"
+  },
   {
-    title: 'SecretData 2',
-    description: 'My secret passwords'
+    title: "SecretData 2",
+    description: "My secret passwords"
   }
 ];
 
-app.prepare()
+mongoose
+  .connect(config.DB_URI, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB Connected!"))
+  .catch(err => console.error(err));
+
+// This how to write it much cleaner?
+// async () =>
+//   (await mongoose.connect(config.DB_URI, { useNewUrlParser: true }))();
+
+app
+  .prepare()
   .then(() => {
-    const server = express()
+    const server = express();
+    server.use(bodyParser.json());
 
-    server.get('/api/v1/secret', authService.checkJWT, (req, res) => {
+    server.use('/api/v1/books', bookRoutes);
+
+    server.get("/api/v1/secret", authService.checkJWT, (req, res) => {
       return res.json(secretData);
-    })
+    });
 
-    server.get('/api/v1/onlysiteowner', authService.checkJWT, authService.checkRole('siteOwner'), (req, res) => {
-      return res.json(secretData);
-    })
+    server.get(
+      "/api/v1/onlysiteowner",
+      authService.checkJWT,
+      authService.checkRole("siteOwner"),
+      (req, res) => {
+        return res.json(secretData);
+      }
+    );
 
-    server.get('*', (req, res) => {
-      return handle(req, res)
-    })
+    server.get("*", (req, res) => {
+      return handle(req, res);
+    });
 
-    server.use(function (err, req, res, next) {
-      if (err.name === 'UnauthorizedError') {
+    server.use(function(err, req, res, next) {
+      if (err.name === "UnauthorizedError") {
         res.status(401).send({
-          title: 'Unauthorized',
-          detail: 'Unauthorized access!'
+          title: "Unauthorized",
+          detail: "Unauthorized access!"
         });
       }
     });
 
-    server.use(handle).listen(3000, (err) => {
-      if (err) throw err
-      console.log('> Ready on http://localhost:3000')
-    })
+    server.use(handle).listen(3000, err => {
+      if (err) throw err;
+      console.log("> Ready on http://localhost:3000");
+    });
   })
-    .catch((ex) => {
-      console.error(ex.stack)
-      process.exit(1)
-    })
+  .catch(ex => {
+    console.error(ex.stack);
+    process.exit(1);
+  });
