@@ -1,23 +1,38 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from "axios";
+import Cookies from "js-cookie";
 
-import { getCookieFromReq } from '../helpers/utils';
+import { getCookieFromReq } from "../helpers/utils";
 
-const setAuthHeader = (req) => {
-    const token = req ? getCookieFromReq(req, 'jwt') : Cookies.getJSON('jwt');
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:3000/api/v1',
+  timeout: 3000
+});
 
-    if (token) {
-      return { headers: { 'authorization': `Bearer ${token}` }}
-    }
-    return undefined;
-}
+const setAuthHeader = req => {
+  const token = req ? getCookieFromReq(req, "jwt") : Cookies.getJSON("jwt");
 
-export const getSecretData = async (req) => {
+  if (token) {
+    return { headers: { authorization: `Bearer ${token}` } };
+  }
+  return undefined;
+};
 
-  const url = 'http://localhost:3000/api/v1/secret';
+export const getSecretData = async req => {
+  const url = "/secret";
 
-  return await axios.get(url, setAuthHeader(req))
-    .then((response) => {
-      return response.data
-    });
+  return await axiosInstance.get(url, setAuthHeader(req)).then(response => {
+    return response.data;
+  });
+};
+
+export const getPortfolios = async () => {
+  return await axiosInstance
+    .get("/portfolios")
+    .then(response => response.data);
+};
+
+export const createPortfolio = async (portfolioData) => {
+
+  return await axiosInstance.post('/portfolios', portfolioData, setAuthHeader())
+    .then(response => response.data);
 }

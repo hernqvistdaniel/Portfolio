@@ -13,9 +13,21 @@ router.post(
 
 router.get(
   "",
+  portfolioCtrl.getPortfolios
+);
+
+router.patch(
+  "/:id",
   authService.checkJWT,
   authService.checkRole("siteOwner"),
-  portfolioCtrl.getPortfolios
+  portfolioCtrl.updatePortfolio
+);
+
+router.delete(
+  "/:id",
+  authService.checkJWT,
+  authService.checkRole("siteOwner"),
+  portfolioCtrl.deletePortfolio
 );
 
 module.exports = router;
