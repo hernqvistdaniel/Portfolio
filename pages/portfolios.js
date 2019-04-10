@@ -3,6 +3,7 @@ import BaseLayout from "../components/layouts/BaseLayout";
 import axios from "axios";
 import Link from "next/link";
 import BasePage from "../components/BasePage";
+import PortfolioCard from "../components/portfolios/PortfolioCard";
 
 import { Router } from "../routes";
 
@@ -32,7 +33,9 @@ class Portfolios extends React.Component {
   }
 
   displayDeleteWarning(portfolioId) {
-    const isConfirm = confirm('Are you sure you want to Delete selected portfolio?');
+    const isConfirm = confirm(
+      "Are you sure you want to Delete selected portfolio?"
+    );
 
     if (isConfirm) {
       this.deletePortfolio(portfolioId);
@@ -42,7 +45,7 @@ class Portfolios extends React.Component {
   deletePortfolio(portfolioId) {
     deletePortfolio(portfolioId)
       .then(() => {
-        Router.pushRoute('/portfolios');
+        Router.pushRoute("/portfolios");
       })
       .catch(err => console.error(err));
   }
@@ -53,42 +56,27 @@ class Portfolios extends React.Component {
     return portfolios.map((portfolio, index) => {
       return (
         <Col key={index} md="4">
-          <React.Fragment>
-            <span>
-              <Card className="portfolio-card">
-                <CardHeader className="portfolio-card-header">
-                  {portfolio.position}
-                </CardHeader>
-                <CardBody>
-                  <p className="portfolio-card-city"> {portfolio.location} </p>
-                  <CardTitle className="portfolio-card-title">
-                    {portfolio.title}
-                  </CardTitle>
-                  <CardText className="portfolio-card-text">
-                    {portfolio.description}
-                  </CardText>
-                  <div className="readMore">
-                    {isAuthenticated && isSiteOwner && (
-                      <React.Fragment>
-                        <Button
-                          onClick={() =>
-                            Router.pushRoute(
-                              `/portfolios/${portfolio._id}/edit`
-                            )
-                          }
-                          color="warning"
-                        >
-                          Edit
-                        </Button>{" "}
-                        {"  "}
-                        <Button onClick={() => this.displayDeleteWarning(portfolio._id)} color="danger">Delete</Button>
-                      </React.Fragment>
-                    )}
-                  </div>
-                </CardBody>
-              </Card>
-            </span>
-          </React.Fragment>
+          <PortfolioCard portfolio={portfolio}>
+            {isAuthenticated && isSiteOwner && (
+              <React.Fragment>
+                <Button
+                  onClick={() =>
+                    Router.pushRoute(`/portfolios/${portfolio._id}/edit`)
+                  }
+                  color="warning"
+                >
+                  Edit
+                </Button>{" "}
+                {"  "}
+                <Button
+                  onClick={() => this.displayDeleteWarning(portfolio._id)}
+                  color="danger"
+                >
+                  Delete
+                </Button>
+              </React.Fragment>
+            )}
+          </PortfolioCard>
         </Col>
       );
     });
