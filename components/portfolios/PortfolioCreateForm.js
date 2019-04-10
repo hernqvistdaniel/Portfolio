@@ -1,45 +1,37 @@
 // Render Prop
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Button } from "reactstrap";
+import { Button, Alert } from "reactstrap";
 import PortInput from "../form/PortInput";
 import PortDate from "../form/PortDate";
+import moment from 'moment';
 
 const validateInputs = values => {
   let errors = {};
 
   Object.entries(values).forEach(([key, value]) => {
-    if (!values[key] && values[key] === 'startDate' || values[key] === 'endDate') {
+    if (!values[key] &&
+      key !== "endDate") {
       errors[key] = `Field ${key} is required!`;
     }
   });
 
-  const startDate = values.startDate;
-  const endDate = values.endDate;
+  const startDate = moment(values.startDate);
+  const endDate = moment(values.endDate);
 
   if (startDate && endDate && endDate.isBefore(startDate)) {
-    errors.endDate = 'End Date cannot be set to a time before Start Date.';
+    errors.endDate = "End Date cannot be set to a time before Start Date.";
   }
 
   return errors;
 };
 
-const INITIAL_VALUES = {
-  title: "",
-  company: "",
-  location: "",
-  position: "",
-  description: "",
-  startDate: "",
-  endDate: ""
-};
-
-const PortfolioCreateForm = (props) => (
+const PortfolioCreateForm = ({initialValues, onSubmit, error}) => (
   <div>
     <Formik
-      initialValues={INITIAL_VALUES}
+      initialValues={initialValues}
       validate={validateInputs}
-      onSubmit={props.onSubmit}
+      onSubmit={onSubmit}
     >
       {({ isSubmitting }) => (
         <Form>
@@ -69,20 +61,24 @@ const PortfolioCreateForm = (props) => (
             component={PortInput}
           />
 
-          <Field
-            name="startDate"
-            label="Start Date"
-            component={PortDate}
-          />
+          <Field name="startDate" label="Start Date" initialDate={initialValues.startDate} component={PortDate} />
 
           <Field
             name="endDate"
             label="End Date"
+            initialDate={initialValues.endDate}
             canBeDisabled={true}
             component={PortDate}
           />
 
-          <Button color="success" size="lg" type="submit" disabled={isSubmitting}>
+          {error && <Alert color="danger">{error}</Alert>}
+
+          <Button
+            color="success"
+            size="lg"
+            type="submit"
+            disabled={isSubmitting}
+          >
             Create
           </Button>
         </Form>
