@@ -1,18 +1,19 @@
-@import './shared/fonts';
-@import './shared/colors';
+@import "./shared/fonts";
+@import "./shared/colors";
 
 // PAGES
-@import './index';
-@import './portfolios';
+@import "./index";
+@import "./portfolios";
+@import "./blogs";
 
 // COMPONENTS
-@import './header';
+@import "./header";
 
-
-html, body {
-  height:100%;
-  width:100%;
-  font-family: 'Montserrat', 'Helvetica';
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Montserrat", "Helvetica";
 }
 
 .self-typed {
