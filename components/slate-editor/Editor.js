@@ -1,28 +1,11 @@
 import React from "react";
-import { Editor } from "slate-react";
-import { Value } from "slate";
 
-// Create our initial value...
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            leaves: [
-              {
-                text: "A line of text in a paragraph."
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-});
+import HoverMenu from './HoverMenu';
+
+import { Editor } from "slate-react";
+import { initialValue } from './initial-value';
+import { renderMark } from './renderers';
+
 
 // Define our app...
 export default class SlateEditor extends React.Component {
@@ -33,9 +16,14 @@ export default class SlateEditor extends React.Component {
   };
 
   componentDidMount() {
+    this.updateMenu();
     this.setState({
       isLoaded: true
     });
+  }
+
+  componentDidUpdate = () => {
+    this.updateMenu();
   }
 
   // On change, update the app's React state with the new editor value.
@@ -43,16 +31,30 @@ export default class SlateEditor extends React.Component {
     this.setState({ value });
   };
 
-  onKeyDown = (event, editor, next) => {
-    // Return with no changes if the keypress is not '&'
-    if (event.key !== '&') return next()
+  updateMenu = () => {
+    const menu = this.menu
+    if (!menu) return
 
-    // Prevent the ampersand character from being inserted.
-    event.preventDefault()
-    
-    // Change the value by inserting 'and' at the cursor's position.
-    editor.insertText('and')
-  };
+    const { value } = this.state
+    const { fragment, selection } = value
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === '') {
+      menu.removeAttribute('style')
+      return
+    }
+
+    const native = window.getSelection()
+    const range = native.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+    menu.style.opacity = 1
+    menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`
+
+    menu.style.left = `${rect.left +
+      window.pageXOffset -
+      menu.offsetWidth / 2 +
+      rect.width / 2}px`
+  }
+
 
   // Render the editor.
   render() {
@@ -62,12 +64,24 @@ export default class SlateEditor extends React.Component {
       <React.Fragment>
         {isLoaded && (
           <Editor
+            placeholder="Enter some text..."
             value={this.state.value}
             onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
+            renderMark={renderMark}
+            renderEditor={this.renderEditor}
           />
         )}
       </React.Fragment>
     );
+  }
+
+  renderEditor = (props, editor, next) => {
+    const children = next()
+    return (
+      <React.Fragment>
+        {children}
+        <HoverMenu innerRef={menu => (this.menu = menu)} editor={editor} />
+      </React.Fragment>
+    )
   }
 }
