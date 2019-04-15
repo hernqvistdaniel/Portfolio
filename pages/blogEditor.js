@@ -7,11 +7,31 @@ import SlateEditor from '../components/slate-editor/Editor';
 
 
 class BlogEditor extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false
+    };
+
+    this.saveBlog = this.saveBlog.bind(this);
+  }
+
+  saveBlog(heading) {
+    const blog = {};
+    blog.title = heading.title;
+    blog.subtitle = heading.subtitle;
+    this.setState({
+      isLoading: true
+    })
+  }
+
   render() {
     return (
       <BaseLayout {...this.props.auth}>
-        <BasePage className="blog-editor-page" title="Share a story..">
-          <SlateEditor />
+        <BasePage containerClass="editor-wrapper" className="blog-editor-page">
+          <SlateEditor save={this.saveBlog} />
         </BasePage>
       </BaseLayout>
     )

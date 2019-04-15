@@ -1,11 +1,11 @@
 import React from "react";
 
-import HoverMenu from './HoverMenu';
+import HoverMenu from "./HoverMenu";
+import ControlMenu from "./ControlMenu";
 
 import { Editor } from "slate-react";
-import { initialValue } from './initial-value';
-import { renderMark } from './renderers';
-
+import { initialValue } from "./initial-value";
+import { renderMark, renderNode } from "./renderers";
 
 // Define our app...
 export default class SlateEditor extends React.Component {
@@ -24,7 +24,7 @@ export default class SlateEditor extends React.Component {
 
   componentDidUpdate = () => {
     this.updateMenu();
-  }
+  };
 
   // On change, update the app's React state with the new editor value.
   onChange = ({ value }) => {
@@ -32,29 +32,49 @@ export default class SlateEditor extends React.Component {
   };
 
   updateMenu = () => {
-    const menu = this.menu
-    if (!menu) return
+    const menu = this.menu;
+    if (!menu) return;
 
-    const { value } = this.state
-    const { fragment, selection } = value
+    const { value } = this.state;
+    const { fragment, selection } = value;
 
-    if (selection.isBlurred || selection.isCollapsed || fragment.text === '') {
-      menu.removeAttribute('style')
-      return
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
+      menu.removeAttribute("style");
+      return;
     }
 
-    const native = window.getSelection()
-    const range = native.getRangeAt(0)
-    const rect = range.getBoundingClientRect()
-    menu.style.opacity = 1
-    menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`
+    const native = window.getSelection();
+    const range = native.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    menu.style.opacity = 1;
+    menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`;
 
     menu.style.left = `${rect.left +
       window.pageXOffset -
       menu.offsetWidth / 2 +
-      rect.width / 2}px`
+      rect.width / 2}px`;
+  };
+
+  getTitle() {
+    const { value } = this.state;
+    const firstBlock = value.document.getBlocks().get(0);
+    const secondBlock = value.document.getBlocks().get(1);
+
+    const title = firstBlock && firstBlock.text ? firstBlock.text : 'No title';
+    const subtitle = secondBlock && secondBlock.text ? secondBlock.text : 'No subtitle';
+
+    return {
+      title,
+      subtitle
+    }
   }
 
+  save() {
+    const {save} = this.props;
+    const headingValues = this.getTitle();
+
+    save(headingValues);
+  }
 
   // Render the editor.
   render() {
@@ -64,10 +84,12 @@ export default class SlateEditor extends React.Component {
       <React.Fragment>
         {isLoaded && (
           <Editor
+            {...this.props}
             placeholder="Enter some text..."
             value={this.state.value}
             onChange={this.onChange}
             renderMark={renderMark}
+            renderNode={renderNode}
             renderEditor={this.renderEditor}
           />
         )}
@@ -76,12 +98,13 @@ export default class SlateEditor extends React.Component {
   }
 
   renderEditor = (props, editor, next) => {
-    const children = next()
+    const children = next();
     return (
       <React.Fragment>
+        <ControlMenu save={() => this.save()} />
         {children}
         <HoverMenu innerRef={menu => (this.menu = menu)} editor={editor} />
       </React.Fragment>
-    )
-  }
+    );
+  };
 }
