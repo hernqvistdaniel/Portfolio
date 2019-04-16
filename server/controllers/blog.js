@@ -14,6 +14,26 @@ exports.getBlogById = (req, res) => {
   });
 };
 
+exports.updateBlog = (req, res) => {
+  const blogId = req.params.id;
+  const blogData = req.body;
+
+  Blog.findById(blogId, function(err, foundBlog) {
+    if (err) {
+      return res.status(422).send(err);
+    }
+
+    foundBlog.set(blogData);
+    foundBlog.updatedAt = new Date();
+    foundBlog.save(function(err, foundBlog) {
+      if (err) {
+        return res.status(422).send(err);
+      }
+      return res.json(foundBlog);
+    });
+  });
+};
+
 exports.createBlog = (req, res) => {
   const lockId = req.query.lockId;
 
@@ -37,11 +57,13 @@ exports.createBlog = (req, res) => {
           return res.json(createdBlog);
         });
       },
-      function(err, ret) {
+      function(err, res) {
         err && console.error(err);
       }
     );
   } else {
-    return res.status(422).send({ message: "Still handling recent request..." });
+    return res
+      .status(422)
+      .send({ message: "Still handling recent request..." });
   }
 };
