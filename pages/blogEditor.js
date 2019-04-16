@@ -13,13 +13,15 @@ class BlogEditor extends React.Component {
     super(props);
 
     this.state = {
-      isSaving: false
+      isSaving: false,
+      lockId: Math.floor(1000 + Math.random() * 9000)
     };
 
     this.saveBlog = this.saveBlog.bind(this);
   }
 
   saveBlog(story, heading) {
+    const {lockId} = this.state;
     const blog = {};
     blog.title = heading.title;
     blog.subtitle = heading.subtitle;
@@ -29,7 +31,7 @@ class BlogEditor extends React.Component {
       isSaving: true
     });
 
-    createBlog(blog)
+    createBlog(blog, lockId)
       .then(createdBlog => {
         this.setState({
           isSaving: false
