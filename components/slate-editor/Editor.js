@@ -8,6 +8,7 @@ import { initialValue } from "./initial-value";
 import { renderMark, renderNode } from "./renderers";
 import Html from 'slate-html-serializer';
 import { rules } from './rules';
+import { Value } from 'slate';
 
 const html = new Html({ rules });
 
@@ -15,14 +16,18 @@ const html = new Html({ rules });
 export default class SlateEditor extends React.Component {
   // Set the initial value when the app is first constructed.
   state = {
-    value: initialValue,
+    value: Value.create(),
     isLoaded: false
   };
 
   componentDidMount() {
+    const valueFromProps = this.props.initialValue;
+
+    const value = valueFromProps ? Value.fromJSON(html.deserialize(valueFromProps)) : Value.fromJSON(initialValue);
+
     this.updateMenu();
     this.setState({
-      isLoaded: true
+      isLoaded: true, value
     });
   }
 
@@ -75,11 +80,11 @@ export default class SlateEditor extends React.Component {
 
   save() {
     const { value } = this.state;
-    const {save} = this.props;
+    const { save, isLoading } = this.props;
     const headingValues = this.getTitle();
     const text = html.serialize(value);
 
-    save(headingValues);
+    !isLoading && save(text, headingValues);
   }
 
   // Render the editor.

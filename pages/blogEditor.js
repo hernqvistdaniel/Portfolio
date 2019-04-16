@@ -1,15 +1,14 @@
-import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
-import BasePage from '../components/BasePage';
+import React from "react";
+import BaseLayout from "../components/layouts/BaseLayout";
+import BasePage from "../components/BasePage";
 import withAuth from "../components/hoc/withAuth";
+import { Router } from '../routes';
 
-import SlateEditor from '../components/slate-editor/Editor';
+import SlateEditor from "../components/slate-editor/Editor";
 
-import { saveBlog } from '../actions';
-
+import { createBlog } from "../actions";
 
 class BlogEditor extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -20,20 +19,29 @@ class BlogEditor extends React.Component {
     this.saveBlog = this.saveBlog.bind(this);
   }
 
-  saveBlog(heading) {
+  saveBlog(story, heading) {
     const blog = {};
     blog.title = heading.title;
     blog.subtitle = heading.subtitle;
+    blog.story = story;
+
     this.setState({
       isSaving: true
     });
-    
-    saveBlog()
-      .then(data => {
+
+    createBlog(blog)
+      .then(createdBlog => {
         this.setState({
           isSaving: false
         });
-        console.log(data);
+        Router.pushRoute(`/blogs/${createdBlog._id}/edit`)
+      })
+      .catch(err => {
+        this.setState({
+          isSaving: false
+        });
+        const message = err.message || "Server Error.";
+        console.error(message);
       });
   }
 
@@ -46,8 +54,8 @@ class BlogEditor extends React.Component {
           <SlateEditor isLoading={isSaving} save={this.saveBlog} />
         </BasePage>
       </BaseLayout>
-    )
+    );
   }
 }
 
-export default withAuth('siteOwner')(BlogEditor);
+export default withAuth("siteOwner")(BlogEditor);
