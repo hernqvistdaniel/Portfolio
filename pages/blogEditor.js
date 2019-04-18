@@ -3,6 +3,7 @@ import BaseLayout from "../components/layouts/BaseLayout";
 import BasePage from "../components/BasePage";
 import withAuth from "../components/hoc/withAuth";
 import { Router } from '../routes';
+import { toast } from 'react-toastify';
 
 import SlateEditor from "../components/slate-editor/Editor";
 
@@ -36,12 +37,14 @@ class BlogEditor extends React.Component {
         this.setState({
           isSaving: false
         });
+        toast.success('Blog Saved Successfully');
         Router.pushRoute(`/blogs/${createdBlog._id}/edit`)
       })
       .catch(err => {
         this.setState({
           isSaving: false
         });
+        toast.error('Unexpected error, you should save your progress locally and refresh page!');
         const message = err.message || "Server Error.";
         console.error(message);
       });

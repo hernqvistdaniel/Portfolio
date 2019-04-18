@@ -1,6 +1,6 @@
 import React from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
-import BasePage from "../components/BasePage";
+import BasePage from "../components/BasePage"; 
 
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from '../routes';
@@ -129,4 +129,4 @@ class Blogs extends React.Component {
   }
 }
 
-export default Blogs;
+export default (Blogs);

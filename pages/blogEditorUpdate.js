@@ -4,6 +4,7 @@ import BasePage from "../components/BasePage";
 import withAuth from "../components/hoc/withAuth";
 
 import SlateEditor from "../components/slate-editor/Editor";
+import { toast } from 'react-toastify';
 
 import { getBlogById, updateBlog } from "../actions";
 
@@ -45,6 +46,7 @@ class BlogEditorUpdate extends React.Component {
 
     updateBlog(updatedBlog, blog._id)
       .then(updatedBlog => {
+        toast.success('Blog Saved Successfully');
         this.setState({
           isSaving: false
         });
@@ -54,6 +56,7 @@ class BlogEditorUpdate extends React.Component {
           isSaving: false
         });
         const message = err.message || "Server Error.";
+        toast.error('Unexpected error, you should save your progress locally and refresh page!');
         console.error(message);
       });
   }
