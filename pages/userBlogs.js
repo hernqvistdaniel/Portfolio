@@ -5,9 +5,9 @@ import { Container, Row, Col } from "reactstrap";
 import PortButtonDropdown from "../components/ButtonDropdown";
 
 import withAuth from "../components/hoc/withAuth";
-import { Link } from "../routes";
+import { Link, Router } from "../routes";
 
-import { getUserBlogs } from "../actions";
+import { getUserBlogs, updateBlog, deleteBlog } from "../actions";
 
 class UserBlogs extends React.Component {
   static async getInitialProps({ req }) {
@@ -20,6 +20,32 @@ class UserBlogs extends React.Component {
     }
 
     return { blogs };
+  }
+
+  changeBlogStatus(status, blogId) {
+    updateBlog({ status }, blogId)
+      .then(() => {
+        Router.pushRoute("/userBlogs");
+      })
+      .catch(err => {
+        console.err(err.message);
+      });
+  }
+
+  deleteBlogWarning(blogId) {
+    const res = confirm("Are you sure you want to delete selected blog?");
+
+    if (res) {
+      this.deleteBlog(blogId);
+    }
+  }
+
+  deleteBlog(blogId) {
+    deleteBlog(blogId)
+      .then(status => {
+        Router.pushRoute('/userBlogs');
+      })
+      .catch(err => console.error(error.message));
   }
 
   separateBlogs(blogs) {
@@ -36,15 +62,23 @@ class UserBlogs extends React.Component {
   createStatus(status) {
     return status === "draft"
       ? { view: "Publish story", value: "published" }
-      : { view: "make a draft", value: "draft" };
+      : { view: "Send to draft", value: "draft" };
   }
 
   dropdownOptions = blog => {
-    const blogStatus = this.createStatus(blog.status);
+    const status = this.createStatus(blog.status);
 
     return [
-      {text: blogStatus.view},
-      {text: 'Delete'}
+      {
+        text: status.view,
+        handlers: {
+          onClick: () => this.changeBlogStatus(status.value, blog._id)
+        }
+      },
+      {
+        text: "Delete",
+        handlers: { onClick: () => this.deleteBlogWarning(blog._id) }
+      }
     ];
   };
 

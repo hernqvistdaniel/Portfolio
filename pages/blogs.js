@@ -1,16 +1,58 @@
 import React from "react";
 import BaseLayout from "../components/layouts/BaseLayout";
-import BasePage from "../components/BasePage"; 
+import BasePage from "../components/BasePage";
 
-import { Container, Row, Col } from 'reactstrap';
-import { Link } from '../routes';
-import moment from 'moment';
+import { Container, Row, Col } from "reactstrap";
+import { Link } from "../routes";
+
+import { getBlogs } from "../actions";
+
+import moment from "moment";
 
 class Blogs extends React.Component {
+
+  static async getInitialProps({ req }) {
+    let blogs = [];
+
+    try {
+      blogs = await getBlogs(req);
+    } catch (err) {
+      console.error(err);
+    }
+
+    return { blogs };
+  }
+
+  renderBlogs = blogs =>
+    blogs.map((blog, index) => (
+      <div key={index} className="post-preview">
+        <Link route={`/blogs/${blog.slug}`}>
+          <a>
+            <h2 className="post-title">{blog.title}</h2>
+            <h3 className="post-subtitle">{blog.subTitle}</h3>
+          </a>
+        </Link>
+        <p className="post-meta">
+          Posted by
+          <a href="#"> {blog.author} </a>
+          {moment(blog.createdAt).format("LLLL")}
+        </p>
+      </div>
+    ));
+
   render() {
+    const { blogs } = this.props;
+
     return (
-      <BaseLayout {...this.props.auth} headerType={'landing'} className="blog-listing-page">
-        <div className="masthead" style={{ backgroundImage: "url('/static/images/home-bg.jpg')" }}>
+      <BaseLayout
+        {...this.props.auth}
+        headerType={"landing"}
+        className="blog-listing-page"
+      >
+        <div
+          className="masthead"
+          style={{ backgroundImage: "url('/static/images/home-bg.jpg')" }}
+        >
           <div className="overlay" />
           <Container>
             <div className="row">
@@ -27,56 +69,7 @@ class Blogs extends React.Component {
           <Row>
             <Col md="10" lg="8" className="mx-auto">
               {
-                <React.Fragment>
-                  <div className="post-preview">
-                    <Link route={`/blogs/blogId`}>
-                      <a>
-                        <h2 className="post-title">Very Nice Blog Post</h2>
-                        <h3 className="post-subtitle">
-                          How I Start Porgramming...
-                        </h3>
-                      </a>
-                    </Link>
-                    <p className="post-meta">
-                      Posted by
-                      <a href="#"> Filip Jerga </a>
-                      {moment().format("LLLL")}
-                    </p>
-                  </div>
-                  <hr />
-                  <div className="post-preview">
-                    <Link route={`/blogs/blogId`}>
-                      <a>
-                        <h2 className="post-title">Very Nice Blog Post</h2>
-                        <h3 className="post-subtitle">
-                          How I Start Porgramming...
-                        </h3>
-                      </a>
-                    </Link>
-                    <p className="post-meta">
-                      Posted by
-                      <a href="#"> Filip Jerga </a>
-                      {moment().format("LLLL")}
-                    </p>
-                  </div>
-                  <hr />
-                  <div className="post-preview">
-                    <Link route={`/blogs/blogId`}>
-                      <a>
-                        <h2 className="post-title">Very Nice Blog Post</h2>
-                        <h3 className="post-subtitle">
-                          How I Start Porgramming...
-                        </h3>
-                      </a>
-                    </Link>
-                    <p className="post-meta">
-                      Posted by
-                      <a href="#"> Filip Jerga </a>
-                      {moment().format("LLLL")}
-                    </p>
-                  </div>
-                  <hr />
-                </React.Fragment>
+                this.renderBlogs(blogs)
               }
               <div className="clearfix">
                 <a className="btn btn-primary float-right" href="#">
@@ -129,4 +122,4 @@ class Blogs extends React.Component {
   }
 }
 
-export default (Blogs);
+export default Blogs;

@@ -48,7 +48,7 @@
     "slate": "^0.44.6",
     "slate-html-serializer": "^0.7.38",
     "slate-react": "^0.21.12",
-    "slugify": "^1.3.3"
+    "slugify": "^1.3.4"
   },
   "devDependencies": {
     "sass-loader": "^7.1.0"

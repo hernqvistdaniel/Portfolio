@@ -1,6 +1,29 @@
 const Blog = require("../models/blog");
+const slugify = require("slugify");
 const AsyncLock = require("async-lock");
 const lock = new AsyncLock();
+
+exports.getBlogs = (req, res) => {
+  Blog.find({status: 'published'}, function(err, publishedBlogs) {
+    if (err) {
+      return res.status(422).send(err);
+    }
+
+    return res.json(publishedBlogs);
+  });
+}
+
+exports.getBlogBySlug = (req, res) => {
+  const slug = req.params.slug;
+
+  Blog.find({slug}, function(err, foundBlog) {
+    if (err) {
+      return res.status(422).send(err);
+    }
+
+    return res.json(foundBlog);
+  });
+}
 
 exports.getBlogById = (req, res) => {
   const blogId = req.params.id;
@@ -17,7 +40,7 @@ exports.getBlogById = (req, res) => {
 exports.getUserBlogs = (req, res) => {
   const userId = req.user.sub;
 
-  Blog.find({userId}, function(err, userBlogs) {
+  Blog.find({ userId }, function(err, userBlogs) {
     if (err) {
       return res.status(422).send(err);
     }
@@ -33,6 +56,14 @@ exports.updateBlog = (req, res) => {
   Blog.findById(blogId, function(err, foundBlog) {
     if (err) {
       return res.status(422).send(err);
+    }
+
+    if (blogData.status && blogData.status === "published" && !foundBlog.slug) {
+      foundBlog.slug = slugify(foundBlog.title, {
+        replacement: "-", // replace spaces with replacement
+        remove: null, // regex to remove characters
+        lower: true // result in lower case
+      });
     }
 
     foundBlog.set(blogData);
@@ -79,3 +110,17 @@ exports.createBlog = (req, res) => {
       .send({ message: "Still handling recent request..." });
   }
 };
+
+
+
+exports.deleteBlog = (req, res) => {
+  const blogId = req.params.id;
+
+  Blog.deleteOne({_id: blogId}, function(err) {
+    if (err) {
+      return res.status(422).send(err);
+    }
+
+    res.json({status: 'deleted'});
+  });
+}
