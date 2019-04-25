@@ -39,7 +39,10 @@ class Index extends React.Component {
     const { isFlipping } = this.state;
 
     return (
-      <BaseLayout className="cover" {...this.props.auth} headerType="index">
+      // Keep this? If I want the background-color to change when flipping the card.
+      // <BaseLayout className={`cover ${isFlipping ? 'cover-1' : 'cover-0'}`} {...this.props.auth} headerType="index">
+      
+      <BaseLayout className='cover' {...this.props.auth} headerType="index">
         <div className="main-section">
           <div className="background-image">
             <img src="/static/images/background-index.png" />
@@ -50,7 +53,7 @@ class Index extends React.Component {
               <Col md="6" className="hero-welcome-wrapper">
                 <div className="hero-welcome-text">
                   <h1>
-                    { isAuthenticated && <span><b>{user.name}</b></span> }
+                    {/* { isAuthenticated && <span><b>{user.name}</b></span> } */}
                     Welcome to <strong>Daniel Hernqvist's</strong> portfolio page!
                   </h1>
                 </div>
@@ -75,7 +78,7 @@ class Index extends React.Component {
               <Col md="6">
                 <div className="hero-section">
                   <div className={`flipper ${isFlipping ? 'isFlipping' : ''}`}>
-                    <div className="back">
+                    <div className="front">
                       <div className="hero-section-content">
                         <h2 className="hejsan"> Full Stack Web Development Student </h2>
                         <div className="hero-section-content-intro">
@@ -85,6 +88,21 @@ class Index extends React.Component {
                       <img
                         className="image"
                         src="/static/images/spavatarsmal-no2.png"
+                      />
+                      <div className="shadow-custom">
+                        <div className="shadow-inner"> </div>
+                      </div>
+                    </div>
+                    <div className="back">
+                      <div className="hero-section-content">
+                        <h2 className="hejsan"> Always learning new stuff! </h2>
+                        <div className="hero-section-content-intro">
+                          Contact me for more info!
+                        </div>
+                      </div>
+                      <img
+                        className="image"
+                        src="/static/images/sepiaavatar.png"
                       />
                       <div className="shadow-custom">
                         <div className="shadow-inner"> </div>
