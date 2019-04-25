@@ -1,37 +1,44 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
+import ActiveLink from "../ActiveLink";
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,} from 'reactstrap';
+  NavItem
+} from "reactstrap";
 
-  import auth0 from '../../services/auth0';
+import auth0 from "../../services/auth0";
 
-  const BsNavLink = (props) => {
+const BsNavLink = props => {
+  const { route, title } = props;
 
-    const {route, title} = props;
-
-    return (
-      <Link href={ route }>
-        <a className="nav-link port-navbar-link"> { title } </a>
-      </Link>
-    )
-  }
+  return (
+    <ActiveLink activeClassName="active" route={route}>
+      <a className="nav-link port-navbar-link"> {title} </a>
+    </ActiveLink>
+  );
+};
 
 const Login = () => {
   return (
-    <span onClick={auth0.login} className="nav-link port-navbar-link"> Login </span>
-  )
-}
+    <span onClick={auth0.login} className="nav-link port-navbar-link">
+      {" "}
+      Login{" "}
+    </span>
+  );
+};
 
 const Logout = () => {
   return (
-    <span onClick={auth0.logout} className="nav-link port-navbar-link"> Logout </span>
-  )
-}
+    <span onClick={auth0.logout} className="nav-link port-navbar-link">
+      {" "}
+      Logout{" "}
+    </span>
+  );
+};
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -48,41 +55,47 @@ export default class Header extends React.Component {
     });
   }
   render() {
-
     const { isAuthenticated, user, className } = this.props;
 
     return (
       <div>
-        <Navbar className={`port-navbar port-nav-base absolute ${className}`} color="transparent" dark expand="md">
-          <NavbarBrand className="port-navbar-brand" href="/"><strong>Daniel Hernqvist</strong></NavbarBrand>
+        <Navbar
+          className={`port-navbar port-nav-base absolute ${className}`}
+          color="transparent"
+          dark
+          expand="md"
+        >
+          <NavbarBrand className="port-navbar-brand" href="/">
+            <strong>Daniel Hernqvist</strong>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem className="port-navbar-item">
-                <BsNavLink route="/" title="Home"/>
+                <BsNavLink route="/" title="Home" />
               </NavItem>
               <NavItem className="port-navbar-item">
-                <BsNavLink route="/about" title="About"/>
+                <BsNavLink route="/about" title="About" />
               </NavItem>
               <NavItem className="port-navbar-item">
-                <BsNavLink route="/portfolios" title="Portfolio"/>
+                <BsNavLink route="/portfolios" title="Portfolio" />
               </NavItem>
               <NavItem className="port-navbar-item">
-                <BsNavLink route="/blogs" title="Blog"/>
+                <BsNavLink route="/blogs" title="Blog" />
               </NavItem>
               <NavItem className="port-navbar-item">
-                <BsNavLink route="/cv" title="CV"/>
+                <BsNavLink route="/cv" title="CV" />
               </NavItem>
-              { !isAuthenticated &&
+              {!isAuthenticated && (
                 <NavItem className="port-navbar-item clickable">
                   <Login />
                 </NavItem>
-              }
-              { isAuthenticated &&
+              )}
+              {isAuthenticated && (
                 <NavItem className="port-navbar-item clickable">
                   <Logout />
                 </NavItem>
-              }
+              )}
             </Nav>
           </Collapse>
         </Navbar>
