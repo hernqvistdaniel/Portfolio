@@ -14,7 +14,7 @@ class Index extends React.Component {
       isFlipping: false
     }
 
-    this.roles = ['Developer', 'Tech Lover', 'Nerd', 'Team-Player'];
+    this.roles = ['Developer', 'Tech Lover', 'Nerd', 'Team-Player', "Lo's Dad"];
   }
 
   componentDidMount() {
@@ -97,7 +97,7 @@ class Index extends React.Component {
                       <div className="hero-section-content">
                         <h2 className="hejsan"> Always learning new stuff! </h2>
                         <div className="hero-section-content-intro">
-                          Contact me for more info!
+                          Hej jag heter Johanna
                         </div>
                       </div>
                       <img
