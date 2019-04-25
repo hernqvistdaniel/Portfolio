@@ -1,6 +1,3 @@
-
-
-
 export const getCookieFromReq = (req, cookieKey) => {
   const cookie = req.headers.cookie
     .split(";")
@@ -10,4 +7,12 @@ export const getCookieFromReq = (req, cookieKey) => {
     return undefined;
   }
   return cookie.split("=")[1];
+};
+
+export const shortenText = (text, maxLength) => {
+  if (text && text.length > maxLength) {
+    return `${text.substring(0, maxLength)} ...`;
+  }
+
+  return text;
 };
