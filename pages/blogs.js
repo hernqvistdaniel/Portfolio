@@ -49,6 +49,7 @@ class Blogs extends React.Component {
         {...this.props.auth}
         headerType={"landing"}
         className="blog-listing-page"
+        title="Daniel Hernqvist - My Blogs"
       >
         <div
           className="masthead"
