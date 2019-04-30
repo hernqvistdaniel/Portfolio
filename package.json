@@ -2,7 +2,8 @@
   "name": "portfolio-dhern",
   "version": "1.0.0",
   "engines": {
-    "node": "11.12.0"
+    "node": "11.12.0",
+    "npm": "6.9.0"
   },
   "main": "index.js",
   "scripts": {
