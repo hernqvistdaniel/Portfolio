@@ -1,9 +1,9 @@
-// Render Prop
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button, Alert } from "reactstrap";
 import PortInput from "../form/PortInput";
 import PortDate from "../form/PortDate";
+
 import moment from "moment";
 
 const validateInputs = values => {
@@ -19,7 +19,7 @@ const validateInputs = values => {
   const endDate = moment(values.endDate);
 
   if (startDate && endDate && endDate.isBefore(startDate)) {
-    errors.endDate = "End Date cannot be set to a time before Start Date.";
+    errors.endDate = "End Date cannot be before start date!!!";
   }
 
   return errors;
@@ -70,13 +70,11 @@ const PortfolioCreateForm = ({ initialValues, onSubmit, error }) => (
           <Field
             name="endDate"
             label="End Date"
-            initialDate={initialValues.endDate}
             canBeDisabled={true}
+            initialDate={initialValues.endDate}
             component={PortDate}
           />
-
           {error && <Alert color="danger">{error}</Alert>}
-
           <Button
             color="success"
             size="lg"

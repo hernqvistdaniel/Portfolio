@@ -11,11 +11,12 @@ export default class PortDate extends React.Component {
 
     const dateValue = props.initialDate ? moment(props.initialDate) : moment();
     const isHidden = props.initialDate ? false : true;
-    
+
     this.state = {
       dateValue,
       isHidden
     };
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -31,7 +32,7 @@ export default class PortDate extends React.Component {
     this.setState({
       dateValue: date
     });
-    
+
     this.setFieldValueAndTouched(date, true);
   }
 
@@ -44,38 +45,49 @@ export default class PortDate extends React.Component {
   }
 
   render() {
-    const { canBeDisabled, label, field, form: { touched, errors } } = this.props;
+    const {
+      canBeDisabled,
+      label,
+      field,
+      form: { touched, errors }
+    } = this.props;
     const { isHidden, dateValue } = this.state;
-    // const { touched, errors } = this.props.form; 
 
     return (
       <FormGroup>
         <Label>{label}</Label>
         <div className="input-group">
-        { !isHidden && 
-          <DatePicker
-            selected={dateValue}
-            onChange={this.handleChange}
-            peekNextMonth
-            showMonthDropdown
-            showYearDropdown
-            maxDate={moment()}
-            dropdownMode="select"
-          />
-        }
-        </div>
-        { canBeDisabled && !isHidden && <Button onClick={() => this.toggleDate('Ongoing')}>Still in progress.</Button>}
-
-        { canBeDisabled && isHidden && 
-          <React.Fragment>
-            <span>Still in progress.</span>
-            <Button onClick={() => this.toggleDate(dateValue)}>Set End Date.</Button>
-          </React.Fragment>
-        }
-
-          {touched[field.name] && errors[field.name] && (
-            <div className="error">{errors[field.name]}</div>
+          {!isHidden && (
+            <DatePicker
+              selected={dateValue}
+              onChange={this.handleChange}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              maxDate={moment()}
+              dropdownMode="select"
+            />
           )}
+        </div>
+        {canBeDisabled && !isHidden && (
+          <Button onClick={() => this.toggleDate(null)}>
+            Still Working Here...
+          </Button>
+        )}
+
+        {canBeDisabled && isHidden && (
+          <React.Fragment>
+            <span> Still Working Here </span>
+            <Button onClick={() => this.toggleDate(dateValue)}>
+              {" "}
+              Set End Date{" "}
+            </Button>
+          </React.Fragment>
+        )}
+
+        {touched[field.name] && errors[field.name] && (
+          <div className="error">{errors[field.name]}</div>
+        )}
       </FormGroup>
     );
   }
