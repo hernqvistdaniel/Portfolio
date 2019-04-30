@@ -22,7 +22,7 @@ const INITIAL_VALUES = {
 
 class PortfolioNew extends React.Component {
   constructor(props) {
-    super(props);
+    super();
 
     this.state = {
       error: undefined
