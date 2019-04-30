@@ -44,19 +44,20 @@ class Auth0 {
     Cookies.set("jwt", authResult.idToken);
   }
 
-  login() {
-    this.auth0.authorize();
-  }
-
+  
   logout() {
     Cookies.remove("jwt");
-
+    
     this.auth0.logout({
       returnTo: "",
       clientID: CLIENT_ID
     });
   }
-
+  
+  login() {
+    this.auth0.authorize();
+  }
+  
   async getJWKS() {
     const res = await axios.get('https://dhern.eu.auth0.com/.well-known/jwks.json');
     const jwks = res.data;

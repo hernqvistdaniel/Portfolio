@@ -4,14 +4,13 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button, Alert } from "reactstrap";
 import PortInput from "../form/PortInput";
 import PortDate from "../form/PortDate";
-import moment from 'moment';
+import moment from "moment";
 
 const validateInputs = values => {
   let errors = {};
 
   Object.entries(values).forEach(([key, value]) => {
-    if (!values[key] &&
-      key !== "endDate") {
+    if (!values[key] && key !== "endDate") {
       errors[key] = `Field ${key} is required!`;
     }
   });
@@ -26,7 +25,7 @@ const validateInputs = values => {
   return errors;
 };
 
-const PortfolioCreateForm = ({initialValues, onSubmit, error}) => (
+const PortfolioCreateForm = ({ initialValues, onSubmit, error }) => (
   <div>
     <Formik
       initialValues={initialValues}
@@ -61,7 +60,12 @@ const PortfolioCreateForm = ({initialValues, onSubmit, error}) => (
             component={PortInput}
           />
 
-          <Field name="startDate" label="Start Date" initialDate={initialValues.startDate} component={PortDate} />
+          <Field
+            name="startDate"
+            label="Start Date"
+            initialDate={initialValues.startDate}
+            component={PortDate}
+          />
 
           <Field
             name="endDate"
@@ -88,55 +92,3 @@ const PortfolioCreateForm = ({initialValues, onSubmit, error}) => (
 );
 
 export default PortfolioCreateForm;
-
-// import React from 'react';
-
-// export default class PortfolioCreateForm extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       title: '',
-//       description: '',
-//       language: ''
-//     };
-
-//     this.handleChange = this.handleChange.bind(this);
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//   }
-
-//   handleChange(event) {
-//     const field = event.target.name;
-//     this.setState({[field]: event.target.value});
-//   }
-
-//   handleSubmit(event) {
-//     alert('A name was submitted: ' + this.state.title + ' ' + this.state.description + ' ' + this.state.language);
-//     event.preventDefault();
-//   }
-
-//   render() {
-//     return (
-//       <form onSubmit={this.handleSubmit}>
-//         <label>
-//           Name:
-//           <input name="title" type="text" value={this.state.value} onChange={this.handleChange} />
-//         </label>
-//         <label>
-//           Description:
-//           <textarea name="description" value={this.state.description} onChange={this.handleChange} />
-//         </label>
-//         <label>
-//           Programming-language:
-//           <select name="language" value={this.state.language} onChange={this.handleChange}>
-//             <option value="--">--</option>
-//             <option value="javascript">JavaScript</option>
-//             <option value="java">Java</option>
-//             <option value="c++">C++</option>
-//             <option value="c#">C#</option>
-//           </select>
-//         </label>
-//         <input type="submit" value="Submit" />
-//       </form>
-//     );
-//   }
-// }
