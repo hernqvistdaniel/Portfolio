@@ -25,11 +25,11 @@ const BaseLayout = props => {
         />
         <meta property="og:title" content="Daniel Hernqvist - Full-Stack Web Developer, Student, Tech, Programmer" />
         <meta property="og:locale" content="en_EU" />
-        <meta property="og:url" content="http://localhost:3000" />
+        <meta property="og:url" content={`${process.env.BASE_URL}`} />
         <meta property="og:type" content="website" />
         <meta property="og:description" content="My name is Daniel Hernqvist, I am currently studying Full-Stack Web Development in Stockholm" />
 
-        {cannonical && <link rel="cannonical" href={`http://localhost:3000${cannonical}`} />}
+        {cannonical && <link rel="cannonical" href={`${process.env.BASE_URL}${cannonical}`} />}
         <link rel="icon" type="image/ico" href="/static/resources/favicon.ico" />
         <link
           rel="stylesheet"

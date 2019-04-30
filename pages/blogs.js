@@ -53,7 +53,7 @@ class Blogs extends React.Component {
       >
         <div
           className="masthead"
-          style={{ backgroundImage: "url('/static/images/home-bg.jpg')" }}
+          style={{ backgroundImage: "url('/static/images/FullSizeRender.jpeg')" }}
         >
           <div className="overlay" />
           <Container>
@@ -61,7 +61,7 @@ class Blogs extends React.Component {
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="site-heading">
                   <h1>Fresh Blogs</h1>
-                  <span className="subheading">Programming, travelling...</span>
+                  <span className="subheading">Programming, Web-Development, Tech, Hobbies...</span>
                 </div>
               </div>
             </div>
@@ -85,15 +85,15 @@ class Blogs extends React.Component {
                 <div className="col-lg-8 col-md-10 mx-auto">
                   <ul className="list-inline text-center">
                     <li className="list-inline-item">
-                      <a href="#">
+                      <a href="https://www.linkedin.com/in/daniel-hernqvist-0b17a7181" target="_blank">
                         <span className="fa-stack fa-lg">
                           <i className="fas fa-circle fa-stack-2x" />
-                          <i className="fab fa-twitter fa-stack-1x fa-inverse" />
+                          <i className="fab fa-linkedin fa-stack-1x fa-inverse" />
                         </span>
                       </a>
                     </li>
                     <li className="list-inline-item">
-                      <a href="#">
+                      <a href="https://www.facebook.com/dsan86" target="_blank">
                         <span className="fa-stack fa-lg">
                           <i className="fas fa-circle fa-stack-2x" />
                           <i className="fab fa-facebook-f fa-stack-1x fa-inverse" />
@@ -101,7 +101,7 @@ class Blogs extends React.Component {
                       </a>
                     </li>
                     <li className="list-inline-item">
-                      <a href="#">
+                      <a href="https://github.com/hernqvistdaniel" target="_blank">
                         <span className="fa-stack fa-lg">
                           <i className="fas fa-circle fa-stack-2x" />
                           <i className="fab fa-github fa-stack-1x fa-inverse" />
