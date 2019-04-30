@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const next = require("next");
 const mongoose = require("mongoose");
 const routes = require("../routes");
@@ -12,19 +12,19 @@ const app = next({ dev });
 const handle = routes.getRequestHandler(app);
 const config = require("./config");
 
-const Book = require('./models/book');
-const bodyParser = require('body-parser');
+const Book = require("./models/book");
+const bodyParser = require("body-parser");
 
-const bookRoutes = require('./routes/book');
-const portfolioRoutes = require('./routes/portfolio');
-const blogRoutes = require('./routes/blog');
+const bookRoutes = require("./routes/book");
+const portfolioRoutes = require("./routes/portfolio");
+const blogRoutes = require("./routes/blog");
 
 const robotsOptions = {
-  root: path.join(__dirname, '../static'),
+  root: path.join(__dirname, "../static"),
   headers: {
-    'Content-Type': 'text/plain;charset=UTF-8'
+    "Content-Type": "text/plain;charset=UTF-8"
   }
-}
+};
 
 const secretData = [
   {
@@ -52,12 +52,12 @@ app
     const server = express();
     server.use(bodyParser.json());
 
-    server.use('/api/v1/books', bookRoutes);
-    server.use('/api/v1/portfolios', portfolioRoutes);
-    server.use('/api/v1/blogs', blogRoutes);
+    server.use("/api/v1/books", bookRoutes);
+    server.use("/api/v1/portfolios", portfolioRoutes);
+    server.use("/api/v1/blogs", blogRoutes);
 
-    server.get('/robots.txt', (req, res) => {
-      return res.status(200).sendFile('robots.txt', robotsOptions);
+    server.get("/robots.txt", (req, res) => {
+      return res.status(200).sendFile("robots.txt", robotsOptions);
     });
 
     server.get("/api/v1/secret", authService.checkJWT, (req, res) => {
