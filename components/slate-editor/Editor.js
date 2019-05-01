@@ -6,9 +6,9 @@ import ControlMenu from "./ControlMenu";
 import { Editor } from "slate-react";
 import { initialValue } from "./initial-value";
 import { renderMark, renderNode } from "./renderers";
-import Html from 'slate-html-serializer';
-import { rules } from './rules';
-import { Value } from 'slate';
+import Html from "slate-html-serializer";
+import { rules } from "./rules";
+import { Value } from "slate";
 
 const html = new Html({ rules });
 
@@ -22,11 +22,14 @@ export default class SlateEditor extends React.Component {
 
   componentDidMount() {
     const valueFromProps = this.props.initialValue;
-    const value = valueFromProps ? Value.fromJSON(html.deserialize(valueFromProps)) : Value.fromJSON(initialValue);
+    const value = valueFromProps
+      ? Value.fromJSON(html.deserialize(valueFromProps))
+      : Value.fromJSON(initialValue);
 
     this.updateMenu();
     this.setState({
-      isLoaded: true, value
+      isLoaded: true,
+      value
     });
   }
 
@@ -41,14 +44,14 @@ export default class SlateEditor extends React.Component {
   onKeyDown = (event, change, next) => {
     const { isLoading } = this.props;
 
-    if (!isLoading && event.which === 83 && (event.ctrlKey ||  event.metaKey)) {
+    if (!isLoading && event.which === 83 && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
       this.save();
       return;
     }
 
     next();
-  }
+  };
 
   updateMenu = () => {
     const menu = this.menu;
@@ -79,13 +82,14 @@ export default class SlateEditor extends React.Component {
     const firstBlock = value.document.getBlocks().get(0);
     const secondBlock = value.document.getBlocks().get(1);
 
-    const title = firstBlock && firstBlock.text ? firstBlock.text : 'No title';
-    const subtitle = secondBlock && secondBlock.text ? secondBlock.text : 'No subtitle';
+    const title = firstBlock && firstBlock.text ? firstBlock.text : "No title";
+    const subtitle =
+      secondBlock && secondBlock.text ? secondBlock.text : "No subtitle";
 
     return {
       title,
       subtitle
-    }
+    };
   }
 
   save() {
@@ -127,6 +131,11 @@ export default class SlateEditor extends React.Component {
         <ControlMenu isLoading={isLoading} save={() => this.save()} />
         {children}
         <HoverMenu innerRef={menu => (this.menu = menu)} editor={editor} />
+        <style jsx>
+          {`
+            @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+          `}
+        </style>
       </React.Fragment>
     );
   };

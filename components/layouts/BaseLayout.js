@@ -28,6 +28,7 @@ const BaseLayout = props => {
         <meta property="og:url" content={`${process.env.BASE_URL}`} />
         <meta property="og:type" content="website" />
         <meta property="og:description" content="My name is Daniel Hernqvist, I am currently studying Full-Stack Web Development in Stockholm" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
 
         {cannonical && <link rel="cannonical" href={`${process.env.BASE_URL}${cannonical}`} />}
         <link rel="icon" type="image/ico" href="/static/resources/favicon.ico" />
@@ -36,10 +37,6 @@ const BaseLayout = props => {
           href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
           crossorigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet"
         />
       </Head>
       <div className="layout-container">

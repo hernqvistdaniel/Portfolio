@@ -115,7 +115,7 @@ class Index extends React.Component {
                       </div>
                       <img
                         className="image"
-                        src="/static/images/spavatarsmal-no2.png"
+                        src="/static/images/spavatarsmal-no2.jpg"
                         alt="Animated avatar of the author to the page"
                       />
                       <div className="shadow-custom">
@@ -131,7 +131,7 @@ class Index extends React.Component {
                       </div>
                       <img
                         className="image"
-                        src="/static/images/sepiaavatar.png"
+                        src="/static/images/sepiaavatar.jpg"
                         alt="Animated avatar of the author to the page in sepia colors"
                       />
                       <div className="shadow-custom">

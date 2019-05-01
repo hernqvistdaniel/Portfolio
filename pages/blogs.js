@@ -53,7 +53,7 @@ class Blogs extends React.Component {
       >
         <div
           className="masthead"
-          style={{ backgroundImage: "url('/static/images/FullSizeRender.jpeg')" }}
+          style={{ backgroundImage: "url('/static/images/FullSizeRender-min.jpg')" }}
         >
           <div className="overlay" />
           <Container>
