@@ -54,7 +54,7 @@ class BlogEditor extends React.Component {
     const { isSaving } = this.state;
 
     return (
-      <BaseLayout {...this.props.auth}>
+      <BaseLayout {...this.props.auth} title="Blogs Editor">
         <BasePage containerClass="editor-wrapper" className="blog-editor-page">
           <SlateEditor isLoading={isSaving} save={this.saveBlog} />
         </BasePage>

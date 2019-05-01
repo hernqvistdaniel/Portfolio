@@ -9,10 +9,10 @@ const BaseLayout = props => {
     isAuthenticated,
     user,
     isSiteOwner,
-    title,
     cannonical
   } = props;
   const headerType = props.headerType || "default";
+  const title = props.title || 'Daniel Hernqvist Portfolio';
 
   return (
     <React.Fragment>
