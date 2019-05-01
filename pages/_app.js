@@ -28,10 +28,6 @@ class MyApp extends App {
     return { pageProps, auth }
   }
 
-  componentDidMount() {
-    Fonts();
-  }
-
   render() {
     const { Component, pageProps, auth } = this.props
 
