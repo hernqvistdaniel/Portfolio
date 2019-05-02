@@ -44,9 +44,9 @@ class Index extends React.Component {
       
       <BaseLayout className='cover' {...this.props.auth} headerType="index" title="Daniel Hernqvist - Portfolio">
         <div className="main-section">
-          <div className="background-image">
+          {/* <div className="background-image">
             <img src="/static/images/background-index.png" alt="Background picture of the home screen" />
-          </div>
+          </div> */}
 
           <Container>
             <Row>
