@@ -53,8 +53,7 @@ class Index extends React.Component {
               <Col md="6" className="hero-welcome-wrapper">
                 <div className="hero-welcome-text">
                   <h1>
-                    {/* { isAuthenticated && <span><b>{user.name}</b></span> } */}
-                    Welcome to <strong>Daniel Hernqvist's</strong> portfolio page!
+                    My name is Daniel and I am currently studying Web Development in Stockholm!
                   </h1>
                 </div>
 
@@ -71,10 +70,18 @@ class Index extends React.Component {
                 />
 
                 <div className="hero-welcome-bio">
-                  <h2>Here is some more information!</h2>
+                  <h2>Check out my Portfolio or read my Blog where I write about education and development!</h2>
                 </div>
                 <div className="col-lg-8 col-md-10 mx-auto">
                   <ul className="list-inline text-center">
+                    <li className="list-inline-item">
+                      <a href="mailto:dhernqvist@gmail.com">
+                        <span className="fa-stack fa-lg faIcon">
+                          <i className="fas fa-circle fa-stack-2x" />
+                          <i className="fas fa-envelope fa-stack-1x fa-inverse" />
+                        </span>
+                      </a>
+                    </li>
                     <li className="list-inline-item">
                       <a href="https://www.linkedin.com/in/daniel-hernqvist-0b17a7181" target="_blank">
                         <span className="fa-stack fa-lg faIcon">
@@ -108,9 +115,9 @@ class Index extends React.Component {
                   <div className={`flipper ${isFlipping ? 'isFlipping' : ''}`}>
                     <div className="front">
                       <div className="hero-section-content">
-                        <h2 className="hejsan"> Full Stack Web Development Student </h2>
+                        <h2 className="hejsan">Daniel Hernqvist</h2>
                         <div className="hero-section-content-intro">
-                          This is my Portfolio Page!
+                          Web Developer
                         </div>
                       </div>
                       <img
@@ -124,9 +131,9 @@ class Index extends React.Component {
                     </div>
                     <div className="back">
                       <div className="hero-section-content">
-                        <h2 className="hejsan"> Always learning new stuff! </h2>
+                        <h2 className="hejsan"> Love learning new stuff! </h2>
                         <div className="hero-section-content-intro">
-                          Hej jag heter Johanna
+                          Feel free to contact me at anytime!
                         </div>
                       </div>
                       <img

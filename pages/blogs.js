@@ -6,10 +6,9 @@ import { Container, Row, Col } from "reactstrap";
 import { Link } from "../routes";
 
 import { getBlogs } from "../actions";
-import { shortenText } from '../helpers/utils';
+import { shortenText } from "../helpers/utils";
 
 import moment from "moment";
-
 
 class Blogs extends React.Component {
   static async getInitialProps({ req }) {
@@ -21,7 +20,7 @@ class Blogs extends React.Component {
       console.error(err);
     }
 
-    return {blogs};
+    return { blogs };
   }
 
   renderBlogs = blogs =>
@@ -53,15 +52,19 @@ class Blogs extends React.Component {
       >
         <div
           className="masthead"
-          style={{ backgroundImage: "url('/static/images/FullSizeRender-min.jpg')" }}
+          style={{
+            backgroundImage: "url('/static/images/FullSizeRender-min.jpg')"
+          }}
         >
           <div className="overlay" />
           <Container>
             <div className="row">
               <div className="col-lg-8 col-md-10 mx-auto">
                 <div className="site-heading">
-                  <h1>Fresh Blogs</h1>
-                  <span className="subheading">Programming, Web-Development, Tech, Hobbies...</span>
+                  <h1>Latest Blogposts</h1>
+                  <span className="subheading">
+                    Programming, Web-Development, Tech, Hobbies...
+                  </span>
                 </div>
               </div>
             </div>
@@ -84,8 +87,22 @@ class Blogs extends React.Component {
               <Row>
                 <div className="col-lg-8 col-md-10 mx-auto">
                   <ul className="list-inline text-center">
+                  <li className="list-inline-item">
+                      <a
+                        href="mailto:dhernqvist@gmail.com"
+                        target="_blank"
+                      >
+                        <span className="fa-stack fa-lg">
+                          <i className="fas fa-circle fa-stack-2x" />
+                          <i className="fas fa-envelope fa-stack-1x fa-inverse" />
+                        </span>
+                      </a>
+                    </li>
                     <li className="list-inline-item">
-                      <a href="https://www.linkedin.com/in/daniel-hernqvist-0b17a7181" target="_blank">
+                      <a
+                        href="https://www.linkedin.com/in/daniel-hernqvist-0b17a7181"
+                        target="_blank"
+                      >
                         <span className="fa-stack fa-lg">
                           <i className="fas fa-circle fa-stack-2x" />
                           <i className="fab fa-linkedin fa-stack-1x fa-inverse" />
@@ -101,7 +118,10 @@ class Blogs extends React.Component {
                       </a>
                     </li>
                     <li className="list-inline-item">
-                      <a href="https://github.com/hernqvistdaniel" target="_blank">
+                      <a
+                        href="https://github.com/hernqvistdaniel"
+                        target="_blank"
+                      >
                         <span className="fa-stack fa-lg">
                           <i className="fas fa-circle fa-stack-2x" />
                           <i className="fab fa-github fa-stack-1x fa-inverse" />

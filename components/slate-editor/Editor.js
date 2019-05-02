@@ -12,9 +12,7 @@ import { Value } from "slate";
 
 const html = new Html({ rules });
 
-// Define our app...
 export default class SlateEditor extends React.Component {
-  // Set the initial value when the app is first constructed.
   state = {
     value: Value.create(),
     isLoaded: false
