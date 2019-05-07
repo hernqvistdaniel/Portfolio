@@ -53,7 +53,7 @@ class Index extends React.Component {
               <Col md="6" className="hero-welcome-wrapper">
                 <div className="hero-welcome-text">
                   <h1>
-                    My name is Daniel and I am currently studying Web Development in Stockholm!
+                    Web Development-student in Stockholm!
                   </h1>
                 </div>
 
