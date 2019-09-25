@@ -18,7 +18,7 @@ class PortfolioCardDetail extends React.Component {
             <p><b>Company: </b>{portfolio.company}</p>
             <p><b>Position: </b>{portfolio.position}</p>
             <p><b>Location: </b>{portfolio.location}</p>
-            <p><b>Link: </b> {portfolio.link}</p>
+            <a href={portfolio.link}><p><b>Link: </b> {portfolio.link}</p></a>
             <p><b>Start Date: </b>{moment(portfolio.startDate).format('DD MMMM YYYY')}</p>
             <p><b>End Date: </b>{portfolio.endDate ? moment(portfolio.endDate).format('DD MMMM YYYY') : 'Ongoing'}</p>
           </ModalBody>
