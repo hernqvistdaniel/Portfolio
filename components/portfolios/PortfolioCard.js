@@ -46,6 +46,9 @@ export default class PortfolioCard extends React.Component {
             <CardText className="portfolio-card-text">
               {portfolio.description}
             </CardText>
+            <CardText className="portfolio-card-text">
+              <a about="_blank" href={portfolio.link}>{portfolio.link}</a>
+            </CardText>
             <div className="readMore">{children}</div>
           </CardBody>
         </Card>

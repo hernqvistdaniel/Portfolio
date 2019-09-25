@@ -16,6 +16,7 @@ const INITIAL_VALUES = {
   location: "",
   position: "",
   description: "",
+  link: "",
   startDate: moment(),
   endDate: moment()
 };
