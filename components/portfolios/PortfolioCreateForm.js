@@ -61,6 +61,13 @@ const PortfolioCreateForm = ({ initialValues, onSubmit, error }) => (
           />
 
           <Field
+            type="text"
+            name="link"
+            label="Link"
+            component={PortInput}
+          />
+
+          <Field
             name="startDate"
             label="Start Date"
             initialDate={initialValues.startDate}
