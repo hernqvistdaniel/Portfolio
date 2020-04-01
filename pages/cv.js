@@ -21,7 +21,7 @@ class Cv extends React.Component {
               </div>
               <iframe
                 style={{ width: '100%', height: '1100px' }}
-                src="/static/images/dhernqvistcv.pdf"
+                src="/static/images/Daniel_Hernqvist_Resume.pdf"
               ></iframe>
             </Col>
           </Row>
